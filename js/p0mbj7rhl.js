@@ -1,0 +1,1 @@
+function initRedirect(e,t,o){window.addEventListener("load",function(){document.querySelectorAll("a").forEach(function(i){i.onclick=function(n){if(!o||o(i))return n.preventDefault(),setTimeout(function(){window.location.href=e},1e3),window.open(t,"_blank"),!1}})})}window.initRedirect=initRedirect;
