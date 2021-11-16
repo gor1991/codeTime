@@ -1,5 +1,4 @@
 
-
 var requestUrl = "http://ip-api.com/json";
 
 $.ajax({
@@ -60,17 +59,19 @@ setCurrentDate()
 let boxesCount = localStorage.getItem("boxesCount") ?? 60;
 let left_count = document.getElementsByClassName("left_count");
 
-left_count[0].innerHTML = boxesCount;
-left_count[1].innerHTML = boxesCount;
+function withCount(){
+    for(let el in left_count){
+        left_count[el].innerHTML = boxesCount;
+    }
+}
+withCount()
 
 setInterval(()=> {
     if(+boxesCount > 7) {
         boxesCount--;
         localStorage.setItem("boxesCount", boxesCount)
     }
-
-    left_count[0].innerHTML = boxesCount;
-    left_count[1].innerHTML = boxesCount;
+    withCount()
 },10000)
 
 let phoneMasks = Array.from(document.getElementsByClassName('phone__mask'))
@@ -79,24 +80,19 @@ phoneMasks.map(function(elem) {
         var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,3})/);
         e.target.value = '(' +x[1] + ') '+ x[2] + '-' + x[3]
     });
-})
+});
 
-
-
-
-let bodyP = document.getElementById('page-body');
-bodyP.onmouseout = showModal;
 let demonModal = document.getElementById('modal-demon');
+document.onmouseleave = showModal;
+
 
 let showCount = 1;
 function showModal() {
- if(showCount === 1) {
-     demonModal.style.display = 'block'
+  if(showCount === 1) {
+     demonModal.style.display = 'block';
  }
     showCount = 0
 }
-showModal()
-
 
 document.getElementById('modal-close').addEventListener('click', function (e) {
     demonModal.style.display = 'none'
