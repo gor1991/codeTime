@@ -1,0 +1,25 @@
+.gost {
+    width: 237px;
+    height: 72px;
+    background: url('../images/gost.png') 0px 0px;
+}
+.wait-item1{
+    width: 166px;
+    height: 166px;
+    background: url('../images/wait1.png') 0px 0px;
+}
+.why-img1{
+    width: 457.5px;
+    height: 305.31px;
+    background: url('../images/why-img1.png') 0px 0px;
+}
+.why-img2{
+    width: 457.5px;
+    height: 305.94px;
+    background: url('../images/why-img2.png') 0px 0px;
+}
+.bolen-img{
+    width: 457.5px;
+    height: 263.97px;
+    background: url('../images/bolen-img.jpg') 0px 0px;
+}
