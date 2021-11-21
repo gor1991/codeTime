@@ -1,18 +1,24 @@
 
-var requestUrl = "http://ip-api.com/json";
+const COUNTRY_RUSSIA = "RU";
 
-$.ajax({
-    url: requestUrl,
-    type: 'GET',
-    success: function(json)
-    {
-        console.log("My country is: " + json.country, 'region is ' + json.regionName);
-    },
-    error: function(err)
-    {
-        console.log("Request failed, error= " + err);
-    }
-});
+function getCityName() {
+    $.ajax({
+        url: "https://geolocation-db.com/jsonp",
+        jsonpCallback: "callback",
+        dataType: "jsonp",
+        success: function(location) {
+            let cityName;
+            if (location.country_code  !== COUNTRY_RUSSIA) {
+                cityName = 'Страны СНГ'
+            } else {
+                cityName = location.country_name
+            }
+            $('.city_name').text(cityName)
+        }
+    });
+}
+getCityName()
+
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, handleError);
@@ -59,19 +65,19 @@ setCurrentDate()
 let boxesCount = localStorage.getItem("boxesCount") ?? 60;
 let left_count = document.getElementsByClassName("left_count");
 
-function withCount(){
+function calculateLeftCout(){
     for(let el in left_count){
         left_count[el].innerHTML = boxesCount;
     }
 }
-withCount()
+calculateLeftCout()
 
 setInterval(()=> {
     if(+boxesCount > 7) {
         boxesCount--;
         localStorage.setItem("boxesCount", boxesCount)
     }
-    withCount()
+    calculateLeftCout()
 },10000)
 
 let phoneMasks = Array.from(document.getElementsByClassName('phone__mask'))
@@ -97,3 +103,32 @@ function showModal() {
 document.getElementById('modal-close').addEventListener('click', function (e) {
     demonModal.style.display = 'none'
 })
+
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+
+    if(location.search != '') {
+        let getParams = location.search.substr(1);
+
+        getParams.split("&")
+            .forEach(function (item) {
+                tmp = item.split("=");
+
+                if (tmp[0] === parameterName) {
+                    result = decodeURIComponent(tmp[1]);
+                }
+            });
+    }
+
+    return result;
+}
+
+function alertCallbackParam() {
+    let callbackParam = findGetParameter('callback')
+
+    if (callbackParam) {
+        alert('Есть параметр callback, со значением: ' + callbackParam)
+    }
+}
+alertCallbackParam()
